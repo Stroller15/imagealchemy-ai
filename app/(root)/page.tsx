@@ -3,7 +3,7 @@ import { UserButton } from '@clerk/nextjs';
 const Home = () => {
   return (
     <div>
-      <p>Home</p>
+      <p>Home Page</p>
     </div>
   )
 }
