@@ -25,7 +25,7 @@ export const handleError = (error: unknown) => {
     console.error(error);
     throw new Error(`Unknown error: ${JSON.stringify(error)}`);
   }
-}; 
+};
 
 // PLACEHOLDER LOADER - while image is transforming
 const shimmer = (w: number, h: number) => `
