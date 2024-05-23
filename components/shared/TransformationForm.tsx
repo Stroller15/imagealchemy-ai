@@ -4,9 +4,6 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import TransformedImage from "./TransformedImage"
 
-
-
-
 import {
   Select,
   SelectContent,
@@ -35,6 +32,7 @@ import MediaUploader from "./MediaUploader"
 import { updateCredits } from "@/lib/actions/user.actions"
 import { getCldImageUrl } from "next-cloudinary"
 import { addImage, updateImage } from "@/lib/actions/image.actions"
+import { InsufficientCreditsModal } from "./InsuffientCreditsModal"
 
 
 export const formSchema = z.object({
@@ -181,15 +179,22 @@ const transformationType = transformationTypes[type];
 
     setNewTransformation(null)
 
-// Todo:
+
     startTransition(async () => {
       await updateCredits(userId, creditFee)
     })
   }
 
+  useEffect(() => {
+    if(image && (type === 'restore' || type === 'removeBackground')) {
+      setNewTransformation(transformationType.config)
+    }
+  },[image, transformationType.config, type])
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        {creditBalance < Math.abs(creditFee) && <InsufficientCreditsModal /> }
         <CustomField 
           control={form.control}
           name="title"
