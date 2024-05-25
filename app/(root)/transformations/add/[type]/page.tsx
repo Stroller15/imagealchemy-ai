@@ -10,6 +10,7 @@ const AddTransformationTypePage = async ({params: {type}}:SearchParamProps) => {
 
   const transformation = transformationTypes[type];
   const {userId} = auth();
+  console.log("userId>>>>", userId)
 
   if(!userId) redirect('/sing-in');
 
