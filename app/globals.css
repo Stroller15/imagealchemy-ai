@@ -76,7 +76,7 @@
 }
 
 .auth {
-  @apply flex-center min-h-screen w-full bg-purple-100
+  @apply flex-center min-h-screen w-full bg-gradient-to-r from-blue-600 to-violet-600
 }
 
 .root {
