@@ -11,7 +11,7 @@ const Home = async ({searchParams}: SearchParamProps) => {
 
   const images = await getAllImages({page, searchQuery})
 
-  console.log(images)
+
 
   
   return (

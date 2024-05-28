@@ -39,7 +39,9 @@ const TransformedImage = ({
               height={24}
               className="pb-[6px]"
             />
+            <p>download</p>
           </button>
+          
         )}
       </div>
       {image?.publicId && transformationConfig ? (
@@ -58,18 +60,19 @@ const TransformedImage = ({
           onError = {() => {
             debounce(() => {
               setIsTransforming && setIsTransforming(false);
-            }, 8000)
+            }, 8000)()
           }}
           {...transformationConfig}
         />
         {isTransforming && (
           <div className="transforming-loader">
             <Image
-              src="/assests/icons/spinner.svg"
+              src="/assets/icons/spinner.svg"
               width={50}
               height={50}
-              alt="Transforming"
+              alt="spinner"
             />
+            <p className="text-white/80">Please wait...</p>
           </div>
         )}
         </div>
