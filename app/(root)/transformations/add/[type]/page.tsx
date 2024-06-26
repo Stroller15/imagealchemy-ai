@@ -7,10 +7,10 @@ import { redirect } from 'next/navigation';
 import React from 'react'
 
 const AddTransformationTypePage = async ({params: {type}}:SearchParamProps) => {
+  console.log("type>>>", type);
 
   const transformation = transformationTypes[type];
   const {userId} = auth();
-  console.log("userId>>>>", userId)
 
   if(!userId) redirect('/sing-in');
 
