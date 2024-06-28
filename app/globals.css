@@ -328,7 +328,7 @@
   }
 
   .sidebar-nav_element {
-    @apply mb-1 flex-center p-16-semibold w-full whitespace-nowrap rounded-full bg-cover  transition-all hover:bg-orange-100 hover:shadow-inner;
+    @apply mb-1 flex-center p-16-semibold w-full whitespace-nowrap rounded-full bg-cover  transition-all hover:bg-orange-400 hover:shadow-inner;
   }
 
   .sidebar-link {
