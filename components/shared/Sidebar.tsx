@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import { navLinks } from "../../constants";
 import { Button } from "../ui/button";
 import { UserButton } from "@clerk/nextjs";
+import Logo from "../icons/Logo";
 
 const Sidebar = () => {
   const pathname = usePathname();
@@ -16,7 +17,12 @@ const Sidebar = () => {
     <aside className="sidebar">
       <div className="flex size-full flex-col gap-4">
         <Link href="/" className="sidebar-logo">
-          <p className="text-[#4F2CFF] font-extrabold text-3xl ml-3">ImageAlchemy</p>
+          <div className="flex items-center justify-center">
+            <Logo className="size-6 text-[#ED5E06]" />
+            <p className="text-[#ED5E06] font-extrabold text-3xl ml-1">
+              ImageAlchemy
+            </p>
+          </div>
         </Link>
 
         <nav className="sidebar-nav">
@@ -30,7 +36,7 @@ const Sidebar = () => {
                     key={link.route}
                     className={`sidebar-nav_element group ${
                       isActive
-                        ? "bg-purple-gradient text-white"
+                        ? "bg-[#ED5E06] text-white"
                         : "text-gray-700"
                     }`}
                   >
@@ -57,9 +63,7 @@ const Sidebar = () => {
                   <li
                     key={link.route}
                     className={`sidebar-nav_element group ${
-                      isActive
-                        ? "bg-purple-gradient text-white"
-                        : "text-gray-700"
+                      isActive ? "bg-[#ED5E06] text-white" : "text-gray-700"
                     }`}
                   >
                     <Link className="sidebar-link" href={link.route}>
