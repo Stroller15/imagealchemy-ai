@@ -81,7 +81,7 @@ export const Collection = ({
             </p>
 
             <Button
-              className="button w-32 bg-purple-gradient bg-cover text-white"
+              className="bg-[#262E3F] rounded-full  hover:opacity-75 w-32  bg-cover text-white"
               onClick={() => onPageChange("next")}
               disabled={Number(page) >= totalPages}
             >
