@@ -2,9 +2,9 @@
 <br />
 <div align="center">
   <a href="https://image-alchemy-sh.vercel.app/">
-    <img width="500" alt="Xnapper-2024-06-28-15 48 20" src="https://github.com/Stroller15/ImageAlchemy/assets/84174011/2b8cb759-756a-4272-8be1-40952dc57f96">
-  </a>
+    <img width="500" alt="Xnapper-2024-06-28-15 48 20" src="https://github.com/Stroller15/ImageAlchemy/assets/84174011/6f6dc3c6-655a-4ec5-b0b0-d4bed07a516e">
 
+  </a>
 
   <h3 align="center">ImageAlchemy</h3>
 
@@ -21,7 +21,7 @@
 ## Introduction
 Transform Imagination into Reality with ImageAlchemy, a powerful web application. It offers advanced features like image restoration and generative resizing into square, standard portrait, and phone portrait formats, along with object removal, recoloring, and background removal. Ideal for photographers, designers, and enthusiasts, ImageAlchemy redefines image editing with innovation and ease of use.
 
-### **Screenshot**
+<br/>
 
 <img width="2000" alt="imagealchey" src="https://github.com/Stroller15/ImageAlchemy/assets/84174011/cf96285a-7b7f-47f0-85e9-ad42a4aa1c0d">
 
