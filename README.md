@@ -29,7 +29,8 @@ Transform Imagination into Reality with ImageAlchemy, a powerful web application
 [todo]
 
 ## Behind the Code
-[todo]
+![image](https://github.com/Stroller15/ImageAlchemy/assets/84174011/99e7f453-3630-4bd1-877d-4f26cae788e2)
+
 
 ## Features/Use case
 - **Image Restore:** Restore old, damaged, or degraded images to their original quality and clarity using advanced image restoration techniques.
