@@ -35,14 +35,37 @@ Transform Imagination into Reality with ImageAlchemy, a powerful web application
 ## Features/Use case
 - **Image Restore** (Remove noise and imperfections from an image): Restore old, damaged, or degraded images to their original quality and clarity using advanced image restoration techniques.
   
+    <details>
+      <summary>Click to see demo</summary>
+      <img width="1357" alt="restore" src="https://github.com/Stroller15/ImageAlchemy/assets/84174011/6deae311-8aba-482c-8416-7549f1929912">
+    </details>
+  
 - **Generative Fill** (Extend an image's proportions with AI outpainting): Convert images into predefined formats such as square, standard portrait, and phone portrait, optimizing the image for different display requirements with seamless integration and quality preservation.
-  
-- **Object Remove** (Detect and remove objects within images): Effortlessly remove unwanted objects or elements from images, providing a cleaner and more focused visual composition.
-  
-- **Object Recolor** (Detect objects with natural language and change their color): Change the color of specific objects within an image, allowing for creative customization and adjustment without altering the overall image.
-  
-- **Background Remove** (Detect and remove background within images): Instantly remove the background from images, making it easy to isolate subjects or objects and integrate them seamlessly into different backgrounds or contexts.
 
+    <details>
+      <summary>Click to see demo</summary>
+      <img width="1381" alt="fill" src="https://github.com/Stroller15/ImageAlchemy/assets/84174011/37b347e1-559a-47b1-8d6b-969d751797e2">
+    </details>
+
+- **Object Remove** (Detect and remove objects within images): Effortlessly remove unwanted objects or elements from images, providing a cleaner and more focused visual composition.
+
+    <details>
+     <summary>Click to see demo</summary>
+    <img width="1386" alt="remove" src="https://github.com/Stroller15/ImageAlchemy/assets/84174011/ca9268ed-1c48-403e-9cb8-64f6e374c2eb">
+    </details>
+
+- **Object Recolor** (Detect objects with natural language and change their color): Change the color of specific objects within an image, allowing for creative customization and adjustment without altering the overall image.
+
+    <details>
+     <summary>Click to see demo</summary>
+      <img width="1259" alt="recolor" src="https://github.com/Stroller15/ImageAlchemy/assets/84174011/95d0d07f-e257-4dd8-988e-ca5013b7a201">
+    </details>
+
+- **Background Remove** (Detect and remove background within images): Instantly remove the background from images, making it easy to isolate subjects or objects and integrate them seamlessly into different backgrounds or contexts.
+    <details>
+     <summary>Click to see demo</summary>
+    <img width="1073" alt="bgremove" src="https://github.com/Stroller15/ImageAlchemy/assets/84174011/bf555264-6eb9-47b9-9b69-593e03926583">
+    </details>
 
 ## Tech used in this project
 
