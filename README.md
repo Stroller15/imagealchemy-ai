@@ -33,15 +33,15 @@ Transform Imagination into Reality with ImageAlchemy, a powerful web application
 
 
 ## Features/Use case
-- **Image Restore:** Restore old, damaged, or degraded images to their original quality and clarity using advanced image restoration techniques.
+- **Image Restore** (Remove noise and imperfections from an image): Restore old, damaged, or degraded images to their original quality and clarity using advanced image restoration techniques.
   
-- **Generative Fill:** Convert images into predefined formats such as square, standard portrait, and phone portrait, optimizing the image for different display requirements with seamless integration and quality preservation.
+- **Generative Fill** (Extend an image's proportions with AI outpainting): Convert images into predefined formats such as square, standard portrait, and phone portrait, optimizing the image for different display requirements with seamless integration and quality preservation.
   
-- **Object Remove:** Effortlessly remove unwanted objects or elements from images, providing a cleaner and more focused visual composition.
+- **Object Remove** (Detect and remove objects within images): Effortlessly remove unwanted objects or elements from images, providing a cleaner and more focused visual composition.
   
-- **Object Recolor:** Change the color of specific objects within an image, allowing for creative customization and adjustment without altering the overall image.
+- **Object Recolor** (Detect objects with natural language and change their color): Change the color of specific objects within an image, allowing for creative customization and adjustment without altering the overall image.
   
-- **Background Remove:**  Instantly remove the background from images, making it easy to isolate subjects or objects and integrate them seamlessly into different backgrounds or contexts.
+- **Background Remove** (Detect and remove background within images): Instantly remove the background from images, making it easy to isolate subjects or objects and integrate them seamlessly into different backgrounds or contexts.
 
 
 ## Tech used in this project
