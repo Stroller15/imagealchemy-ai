@@ -1,6 +1,6 @@
-Note: 
-- The underlying AI technology behind these features is still experimental, the quality of results may vary.
-- For best results of image restore feature, upload an image that is blurry or over-compressed.
+> [!NOTE]  
+> - The underlying AI technology behind these features is still experimental, the quality of results may vary.
+> - For best results of image restore feature, upload an image that is blurry or over-compressed.
 
   <hr>
 
