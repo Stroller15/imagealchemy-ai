@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { dataUrl, debounce, download, getImageSize} from "@/lib/utils";
+import { dataUrl, debounce, download, getImageSize } from "@/lib/utils";
 import { CldImage, getCldImageUrl } from "next-cloudinary";
 import Image from "next/image";
-import { PlaceholderValue } from 'next/dist/shared/lib/get-img-props';
+import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
 
 const TransformedImage = ({
   image,
@@ -14,16 +14,20 @@ const TransformedImage = ({
   setIsTransforming,
   hasDownload = false,
 }: TransformedImageProps) => {
-
-  const downloadHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const downloadHandler = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
 
-    download(getCldImageUrl({
-      width: image?.width,
-      height: image?.height,
-      src: image?.publicId,
-      ...transformationConfig
-    }), title)
+    download(
+      getCldImageUrl({
+        width: image?.width,
+        height: image?.height,
+        src: image?.publicId,
+        ...transformationConfig,
+      }),
+      title
+    );
   };
 
   return (
@@ -41,45 +45,42 @@ const TransformedImage = ({
             />
             <p>download</p>
           </button>
-          
         )}
       </div>
       {image?.publicId && transformationConfig ? (
         <div className="relative">
-        <CldImage
-          width={getImageSize(type, image, "width")}
-          height={getImageSize(type, image, "height")}
-          src={image?.publicId}
-          alt={image.title}
-          sizes={"(max-width: 767px) 100vw, 50vw"}
-          placeholder={dataUrl as PlaceholderValue}
-          className='transformed-image'
-          onLoad = {() => {
-            setIsTransforming && setIsTransforming(false);
-          }}
-          onError = {() => {
-            debounce(() => {
+          <CldImage
+            width={getImageSize(type, image, "width")}
+            height={getImageSize(type, image, "height")}
+            src={image?.publicId}
+            alt={image.title}
+            sizes={"(max-width: 767px) 100vw, 50vw"}
+            placeholder={dataUrl as PlaceholderValue}
+            className="transformed-image"
+            onLoad={() => {
               setIsTransforming && setIsTransforming(false);
-            }, 8000)()
-          }}
-          {...transformationConfig}
-        />
-        {isTransforming && (
-          <div className="transforming-loader">
-            <Image
-              src="/assets/icons/spinner.svg"
-              width={50}
-              height={50}
-              alt="spinner"
-            />
-            <p className="text-white/80">Please wait...</p>
-          </div>
-        )}
+            }}
+            onError={() => {
+              debounce(() => {
+                setIsTransforming && setIsTransforming(false);
+              }, 8000)();
+            }}
+            {...transformationConfig}
+          />
+          {isTransforming && (
+            <div className="transforming-loader">
+              <Image
+                src="/assets/icons/spinner.svg"
+                width={50}
+                height={50}
+                alt="spinner"
+              />
+              <p className="text-white/80">Please wait...</p>
+            </div>
+          )}
         </div>
-      ):(
-        <div className="transformed-placeholder">
-          Transformed Image
-        </div>
+      ) : (
+        <div className="transformed-placeholder">Transformed Image</div>
       )}
     </div>
   );
