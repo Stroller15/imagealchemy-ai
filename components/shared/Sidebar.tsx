@@ -16,7 +16,7 @@ const Sidebar = () => {
   return (
     <aside className="sidebar">
       <div className="flex size-full flex-col gap-4">
-        <Link href="/" className="sidebar-logo">
+        <Link href="/home" className="sidebar-logo">
           <div className="flex items-center justify-center">
             <Logo className="size-6 text-[#ED5E06]" />
             <p className="text-[#ED5E06] font-extrabold text-3xl ml-1">
