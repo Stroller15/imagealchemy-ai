@@ -32,6 +32,7 @@ module.exports = {
         ember: {
           DEFAULT: c("ember"),
           strong: c("ember-strong"),
+          fill: c("ember-fill"),
         },
         positive: c("positive"),
 

@@ -3,10 +3,11 @@
 @tailwind utilities;
 
 /*
-  Two themes, one ramp structure.
-  - Default (app): neutral graphite, so people can judge photo color.
-  - .darkroom (landing, auth): warm near-black, like a darkroom.
-  Ember #ED5E06 is the only accent.
+  Light and dark, two ramps each.
+  - App: neutral graphite in both modes, so photo colors read true.
+  - .warm (landing, auth): warm paper in light, warm near-black in dark.
+  Ember #ED5E06 is the only accent. --ember-fill stays dark enough for
+  white text in both modes; --ember-strong is the accent used as text.
 */
 @layer base {
   :root {
@@ -21,12 +22,43 @@
     --fg-3: 115 115 115;
     --ember: 237 94 6;
     --ember-strong: 196 77 4;
+    --ember-fill: 196 77 4;
     --positive: 22 163 74;
     --negative: 220 38 38;
     color-scheme: light;
   }
 
-  .darkroom {
+  .dark {
+    --canvas: 20 20 21;
+    --surface: 25 25 27;
+    --raised: 35 35 37;
+    --sunken: 15 15 16;
+    --line: 237 237 237;
+    --border: 42 42 45;
+    --fg: 237 237 237;
+    --fg-2: 161 161 166;
+    --fg-3: 133 133 139;
+    --ember-strong: 247 122 46;
+    --positive: 76 195 138;
+    --negative: 229 72 77;
+    color-scheme: dark;
+  }
+
+  .warm {
+    --canvas: 247 244 238;
+    --surface: 253 251 247;
+    --raised: 239 233 223;
+    --sunken: 236 230 219;
+    --line: 31 27 22;
+    --border: 228 222 211;
+    --fg: 31 27 22;
+    --fg-2: 94 85 74;
+    --fg-3: 123 114 102;
+    --ember-strong: 180 70 3;
+    color-scheme: light;
+  }
+
+  .dark .warm {
     --canvas: 22 21 19;
     --surface: 28 26 24;
     --raised: 38 36 33;
@@ -36,10 +68,7 @@
     --fg: 239 233 222;
     --fg-2: 170 163 152;
     --fg-3: 138 132 122;
-    --ember: 237 94 6;
     --ember-strong: 247 122 46;
-    --positive: 76 195 138;
-    --negative: 229 72 77;
     color-scheme: dark;
   }
 

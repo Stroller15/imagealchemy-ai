@@ -8,6 +8,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "../ui/button";
 import Logo from "../icons/Logo";
 import NavList from "./NavList";
+import ThemeToggle from "./ThemeToggle";
 
 const MobileNav = () => {
   const [open, setOpen] = useState(false);
@@ -25,12 +26,16 @@ const MobileNav = () => {
                 <Menu strokeWidth={1.5} />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-[280px] bg-surface p-0">
+            <SheetContent side="left" className="flex w-[280px] flex-col bg-surface p-0">
               <div className="flex h-14 items-center px-5">
                 <Logo href="/home" />
               </div>
-              <div className="px-3 py-3">
+              <div className="flex-1 overflow-y-auto px-3 py-3">
                 <NavList onNavigate={() => setOpen(false)} />
+              </div>
+              <div className="flex h-14 items-center justify-between border-t border-border px-4">
+                <span className="text-xs text-fg-3">Theme</span>
+                <ThemeToggle />
               </div>
             </SheetContent>
           </Sheet>

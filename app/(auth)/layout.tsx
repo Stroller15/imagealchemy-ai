@@ -44,7 +44,7 @@ const CopyRow = ({ label, value }: { label: string; value: string }) => {
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <main className="darkroom flex min-h-screen flex-col items-center bg-canvas px-4 py-10 text-fg">
+    <main className="warm flex min-h-screen flex-col items-center bg-canvas px-4 py-10 text-fg">
       <Logo />
 
       <div className="mt-10 flex w-full flex-1 flex-col items-center justify-center gap-6">

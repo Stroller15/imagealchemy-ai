@@ -4,6 +4,7 @@ import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
+import ThemeProvider from "@/components/shared/ThemeProvider";
 
 export const metadata: Metadata = {
   title: "ImageAlchemy — Restore, erase and extend your photos",
@@ -26,9 +27,9 @@ export default function RootLayout({
         },
       }}
     >
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <body className={cn(GeistSans.variable, GeistMono.variable)}>
-          {children}
+          <ThemeProvider>{children}</ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
