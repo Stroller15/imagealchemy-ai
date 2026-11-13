@@ -15,17 +15,28 @@ export const Search = () => {
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
-      if (query) {
+      const term = query.trim();
+      // Nothing changed: avoid pushing the same URL again.
+      if (term === (searchParams.get("query") ?? "")) return;
+
+      // A new search starts from the first page.
+      const withoutPage = removeKeysFromQuery({
+        searchParams: searchParams.toString(),
+        keysToRemove: ["page"],
+      });
+      const base = withoutPage.split("?")[1] ?? "";
+
+      if (term) {
         const newUrl = formUrlQuery({
-          searchParams: searchParams.toString(),
+          searchParams: base,
           key: "query",
-          value: query,
+          value: term,
         });
 
         startTransition(() => router.push(newUrl, { scroll: false }));
       } else {
         const newUrl = removeKeysFromQuery({
-          searchParams: searchParams.toString(),
+          searchParams: base,
           keysToRemove: ["query"],
         });
 
