@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useTransition } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { CldImage } from "next-cloudinary";
 import { ChevronLeft, ChevronRight, ImageOff } from "lucide-react";
@@ -10,6 +11,7 @@ import { formUrlQuery } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { Search } from "./Search";
 import { toolIcons } from "./tool-icons";
+import Spinner from "./Spinner";
 
 export const Collection = ({
   hasSearch = false,
@@ -27,6 +29,7 @@ export const Collection = ({
   const router = useRouter();
   const searchParams = useSearchParams();
   const query = searchParams.get("query");
+  const [isPending, startTransition] = useTransition();
 
   const onPageChange = (action: string) => {
     const pageValue = action === "next" ? Number(page) + 1 : Number(page) - 1;
@@ -37,7 +40,7 @@ export const Collection = ({
       value: pageValue,
     });
 
-    router.push(newUrl, { scroll: false });
+    startTransition(() => router.push(newUrl, { scroll: false }));
   };
 
   return (
@@ -48,7 +51,10 @@ export const Collection = ({
       </div>
 
       {images.length > 0 ? (
-        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <ul
+          aria-busy={isPending}
+          className={`grid grid-cols-1 gap-4 transition-opacity duration-200 sm:grid-cols-2 xl:grid-cols-3 ${isPending ? "pointer-events-none opacity-50" : ""}`}
+        >
           {images.map((image) => (
             <Card image={image} key={image._id} />
           ))}
@@ -75,19 +81,20 @@ export const Collection = ({
           <Button
             variant="outline"
             size="sm"
-            disabled={Number(page) <= 1}
+            disabled={Number(page) <= 1 || isPending}
             onClick={() => onPageChange("prev")}
           >
             <ChevronLeft strokeWidth={1.5} />
             Previous
           </Button>
-          <p className="font-mono text-2xs text-fg-3 tabular">
+          <p className="flex items-center gap-2 font-mono text-2xs text-fg-3 tabular">
+            {isPending && <Spinner className="size-3.5" />}
             {page} / {totalPages}
           </p>
           <Button
             variant="outline"
             size="sm"
-            disabled={Number(page) >= totalPages}
+            disabled={Number(page) >= totalPages || isPending}
             onClick={() => onPageChange("next")}
           >
             Next

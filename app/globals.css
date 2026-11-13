@@ -109,6 +109,9 @@
 }
 
 /* Clerk */
+.auth-slot:has(.cl-rootBox) .auth-skeleton {
+  display: none;
+}
 .cl-userButtonBox {
   display: flex;
   flex-flow: row-reverse;

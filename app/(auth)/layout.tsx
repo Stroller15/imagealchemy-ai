@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Check, ChevronDown, Copy } from "lucide-react";
 import Logo from "@/components/icons/Logo";
+import { Skeleton } from "@/components/ui/skeleton";
 
 // Shared demo account so visitors can try the app without signing up.
 const demoAccount = [
@@ -42,13 +43,34 @@ const CopyRow = ({ label, value }: { label: string; value: string }) => {
   );
 };
 
+/** Matches Clerk's card while its script loads and mounts, so the page is never blank. */
+const AuthCardSkeleton = () => (
+  <div
+    role="status"
+    aria-label="Loading sign-in"
+    className="auth-skeleton w-full max-w-[400px] rounded-[16px] bg-surface p-8 hairline"
+  >
+    <Skeleton className="h-5 w-24" />
+    <Skeleton className="mt-2 h-4 w-48" />
+    <Skeleton className="mt-8 h-10 w-full" />
+    <Skeleton className="mt-3 h-10 w-full" />
+    <Skeleton className="mt-8 h-3 w-32" />
+    <Skeleton className="mt-2 h-10 w-full" />
+    <Skeleton className="mt-4 h-10 w-full" />
+  </div>
+);
+
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <main className="warm flex min-h-screen flex-col items-center bg-canvas px-4 py-10 text-fg">
       <Logo />
 
       <div className="mt-10 flex w-full flex-1 flex-col items-center justify-center gap-6">
-        {children}
+        {/* The skeleton stays until Clerk's card is in the page (see .auth-slot). */}
+        <div className="auth-slot flex w-full justify-center">
+          <AuthCardSkeleton />
+          {children}
+        </div>
 
         <details className="group w-full max-w-[400px] rounded-[12px] bg-surface hairline">
           <summary className="flex h-11 cursor-pointer list-none items-center justify-between px-4 text-sm text-fg-2 transition-colors duration-150 hover:text-fg [&::-webkit-details-marker]:hidden">
