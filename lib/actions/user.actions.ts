@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import User from "../database/models/user.model";
 import { connectToDatabase } from "../database/mongoose";
 import { handleError } from "../utils";
+import { requireCurrentUser } from "../server/current-user";
 
 // CREATE
 export async function createUser(user: CreateUserParams) {
@@ -76,19 +77,19 @@ export async function deleteUser(clerkId: string) {
 }
 
 // USE CREDITS
-export async function updateCredits(userId: string, creditFee: number) {
+export async function spendCredit() {
   try {
-    await connectToDatabase();
+    const user = await requireCurrentUser();
 
-    const updatedUserCredits = await User.findOneAndUpdate(
-      { _id: userId },
-      { $inc: { creditBalance: creditFee }},
+    // Atomic: only succeeds when the balance covers the cost.
+    const updated = await User.findOneAndUpdate(
+      { _id: user._id, creditBalance: { $gte: 1 } },
+      { $inc: { creditBalance: -1 } },
       { new: true }
-    )
+    );
+    if (!updated) throw new Error("Not enough credits");
 
-    if(!updatedUserCredits) throw new Error("User credits update failed");
-
-    return JSON.parse(JSON.stringify(updatedUserCredits));
+    return JSON.parse(JSON.stringify(updated));
   } catch (error) {
     handleError(error);
   }

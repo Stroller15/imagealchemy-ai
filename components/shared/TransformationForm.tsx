@@ -8,7 +8,7 @@ import { useEffect, useState, useTransition } from "react";
 import { AspectRatioKey, debounce, deepMergeObjects } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import MediaUploader from "./MediaUploader";
-import { updateCredits } from "@/lib/actions/user.actions";
+import { spendCredit } from "@/lib/actions/user.actions";
 import { getCldImageUrl } from "next-cloudinary";
 import { addImage, updateImage } from "@/lib/actions/image.actions";
 import { InsufficientCreditsModal } from "./InsuffientCreditsModal";
@@ -50,7 +50,6 @@ export const formSchema = z.object({
 const TransformationForm = ({
   action,
   data = null,
-  userId,
   type,
   creditBalance,
   config = null,
@@ -124,7 +123,6 @@ const TransformationForm = ({
         try {
           const newImage = await addImage({
             image: imageData,
-            userId,
             path: "/",
           });
 
@@ -147,7 +145,6 @@ const TransformationForm = ({
               ...imageData,
               _id: data._id,
             },
-            userId,
             path: `/transformations/${data._id}`,
           });
 
@@ -215,7 +212,7 @@ const TransformationForm = ({
     setNewTransformation(null);
 
     startTransition(async () => {
-      await updateCredits(userId, creditFee);
+      await spendCredit();
     });
   };
 
