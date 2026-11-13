@@ -7,7 +7,10 @@ import User from "../database/models/user.model";
 import Image from "../database/models/image.model";
 import { redirect } from "next/navigation";
 
-import { v2 as cloudinary } from 'cloudinary'
+
+/** Escape user input so it is matched literally inside a RegExp. */
+const escapeRegex = (value: string) =>
+  value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 const populateUser = (query: any) => query.populate({
   path: 'author',
@@ -101,34 +104,21 @@ export async function getAllImages({ limit = 9, page = 1, searchQuery = '' }: {
   try {
     await connectToDatabase();
 
-    cloudinary.config({
-      cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-      api_key: process.env.CLOUDINARY_API_KEY,
-      api_secret: process.env.CLOUDINARY_API_SECRET,
-      secure: true,
-    })
-
-    let expression = 'folder=imagealchemy';
-
-    if (searchQuery) {
-      expression += ` AND ${searchQuery}`
-    }
-
-    const { resources } = await cloudinary.search
-      .expression(expression)
-      .execute();
-
-    const resourceIds = resources.map((resource: any) => resource.public_id);
-
-    let query = {};
-
-    if(searchQuery) {
-      query = {
-        publicId: {
-          $in: resourceIds
+    // Search the saved edits themselves. The previous version ran a
+    // Cloudinary search on file metadata, which never matched the titles
+    // people give their edits, and passed raw input into that query.
+    const term = searchQuery.trim().slice(0, 100);
+    const pattern = new RegExp(escapeRegex(term), "i");
+    const query = term
+      ? {
+          $or: [
+            { title: pattern },
+            { prompt: pattern },
+            { color: pattern },
+            { transformationType: pattern },
+          ],
         }
-      }
-    }
+      : {};
 
     const skipAmount = (Number(page) -1) * limit;
 
