@@ -65,7 +65,7 @@ const MediaUploader = ({
       {({ open }) => (
         <div className="flex flex-col gap-3">
           <div className="flex h-8 items-center justify-between">
-            <h3 className="text-xs font-medium text-fg-2">Original</h3>
+            <h3 className="text-sm font-medium text-fg">Original</h3>
             {publicId && image?.width && (
               <span className="font-mono text-2xs text-fg-3 tabular">
                 {image.width} × {image.height}

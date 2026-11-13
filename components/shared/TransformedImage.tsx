@@ -35,7 +35,7 @@ const TransformedImage = ({
   return (
     <div className="flex flex-col gap-3">
       <div className="flex h-8 items-center justify-between">
-        <h3 className="text-xs font-medium text-fg-2">Result</h3>
+        <h3 className="text-sm font-medium text-fg">Transformed</h3>
         {hasDownload && (
           <Button variant="ghost" size="sm" onClick={downloadHandler}>
             <Download strokeWidth={1.5} />
@@ -73,7 +73,7 @@ const TransformedImage = ({
           </div>
         </CropFrame>
       ) : (
-        <div className="flex min-h-72 flex-1 flex-col items-center justify-center gap-1 rounded-[10px] border border-dashed border-fg/15 px-6 text-center">
+        <div className="flex min-h-72 flex-1 flex-col items-center justify-center gap-1 rounded-[10px] border border-dashed border-fg/20 bg-surface/60 px-6 text-center">
           <p className="text-sm font-medium text-fg-2">No result yet</p>
           <p className="text-xs text-fg-3">
             Upload an image and apply the transformation to see it here

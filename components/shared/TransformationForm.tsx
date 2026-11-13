@@ -204,24 +204,32 @@ const TransformationForm = ({
   }, [image, transformationType.config, type]);
 
   const cost = Math.abs(creditFee);
+  const fieldCount =
+    1 + (type === "fill" || type === "remove" || type === "recolor" ? 1 : 0) +
+    (type === "recolor" ? 1 : 0);
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="grid items-start gap-6 lg:grid-cols-[320px_minmax(0,1fr)]"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-8">
         {creditBalance < cost && <InsufficientCreditsModal />}
 
         {/* Settings */}
-        <div className="flex flex-col gap-5 rounded-[14px] bg-surface p-5 hairline lg:sticky lg:top-10">
+        <div
+          className={
+            fieldCount === 3
+              ? "grid gap-5 md:grid-cols-3"
+              : fieldCount === 2
+                ? "grid gap-5 md:grid-cols-2"
+                : "grid gap-5"
+          }
+        >
           <CustomField
             control={form.control}
             name="title"
             formLabel="Title"
             className="w-full"
             render={({ field }) => (
-              <Input {...field} placeholder="Untitled edit" />
+              <Input {...field} placeholder="Untitled edit" className="h-10" />
             )}
           />
 
@@ -238,7 +246,7 @@ const TransformationForm = ({
                   }
                   value={field.value}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="h-10">
                     <SelectValue placeholder="Select a size" />
                   </SelectTrigger>
                   <SelectContent>
@@ -264,6 +272,7 @@ const TransformationForm = ({
               render={({ field }) => (
                 <Input
                   value={field.value}
+                  className="h-10"
                   placeholder={type === "remove" ? "e.g. the lamp post" : "e.g. the car"}
                   onChange={(e) =>
                     onInputChangeHandler(
@@ -287,6 +296,7 @@ const TransformationForm = ({
               render={({ field }) => (
                 <Input
                   value={field.value}
+                  className="h-10"
                   placeholder="e.g. navy blue"
                   onChange={(e) =>
                     onInputChangeHandler(
@@ -300,36 +310,10 @@ const TransformationForm = ({
               )}
             />
           )}
-
-          <div className="flex flex-col gap-2 border-t border-border pt-5">
-            <Button
-              type="button"
-              variant="ember"
-              className="w-full"
-              disabled={isTransforming || newTransformation === null}
-              onClick={onTransformHandler}
-            >
-              {isTransforming ? "Applying" : "Apply transformation"}
-            </Button>
-            <Button
-              type="submit"
-              variant="secondary"
-              className="w-full"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? "Saving" : "Save image"}
-            </Button>
-            <p className="mt-2 flex items-center justify-between font-mono text-2xs text-fg-3 tabular">
-              <span>
-                Uses {cost} credit
-              </span>
-              <span>{creditBalance.toLocaleString("en-US")} left</span>
-            </p>
-          </div>
         </div>
 
-        {/* Lightbox */}
-        <div className="grid gap-6 rounded-[16px] bg-sunken p-5 md:grid-cols-2 md:p-6">
+        {/* Original and result */}
+        <div className="grid gap-6 md:grid-cols-2">
           <CustomField
             control={form.control}
             name="publicId"
@@ -352,6 +336,34 @@ const TransformationForm = ({
             setIsTransforming={setIsTransforming}
             transformationConfig={transformationConfig}
           />
+        </div>
+
+        {/* Actions */}
+        <div className="flex flex-col gap-3">
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Button
+              type="button"
+              variant="ember"
+              size="lg"
+              className="w-full"
+              disabled={isTransforming || newTransformation === null}
+              onClick={onTransformHandler}
+            >
+              {isTransforming ? "Applying" : "Apply transformation"}
+            </Button>
+            <Button
+              type="submit"
+              variant="secondary"
+              size="lg"
+              className="w-full"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Saving" : "Save image"}
+            </Button>
+          </div>
+          <p className="font-mono text-2xs text-fg-3 tabular">
+            Uses {cost} credit · {creditBalance.toLocaleString("en-US")} left
+          </p>
         </div>
       </form>
     </Form>
