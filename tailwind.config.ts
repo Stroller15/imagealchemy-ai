@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const c = (v: string) => `rgb(var(--${v}) / <alpha-value>)`;
+
 module.exports = {
   darkMode: ["class"],
   content: [
@@ -11,72 +13,65 @@ module.exports = {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
+      padding: { DEFAULT: "1.25rem", md: "2rem" },
+      screens: { "2xl": "1240px" },
     },
     extend: {
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        purple: {
-          100: "#F4F7FE",
-          200: "#BCB6FF",
-          400: "#868CFF",
-          500: "#7857FF",
-          600: "#4318FF",
+        // Product ramp
+        canvas: c("canvas"),
+        surface: c("surface"),
+        raised: c("raised"),
+        sunken: c("sunken"),
+        line: c("line"),
+        fg: {
+          DEFAULT: c("fg"),
+          2: c("fg-2"),
+          3: c("fg-3"),
         },
-        dark: {
-          400: "#7986AC",
-          500: "#606C80",
-          600: "#2B3674",
-          700: "#384262",
+        ember: {
+          DEFAULT: c("ember"),
+          strong: c("ember-strong"),
         },
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
+        positive: c("positive"),
+
+        // shadcn aliases, mapped onto the ramp
+        border: c("border"),
+        input: c("border"),
+        ring: c("ember"),
+        background: c("canvas"),
+        foreground: c("fg"),
+        primary: { DEFAULT: c("fg"), foreground: c("surface") },
+        secondary: { DEFAULT: c("raised"), foreground: c("fg") },
+        destructive: { DEFAULT: c("negative"), foreground: "255 255 255" },
+        muted: { DEFAULT: c("raised"), foreground: c("fg-3") },
+        accent: { DEFAULT: c("raised"), foreground: c("fg") },
+        popover: { DEFAULT: c("surface"), foreground: c("fg") },
+        card: { DEFAULT: c("surface"), foreground: c("fg") },
       },
       fontFamily: {
-        IBMPlex: ["var(--font-ibm-plex)"],
+        sans: ["var(--font-geist-sans)", "ui-sans-serif", "system-ui"],
+        mono: ["var(--font-geist-mono)", "ui-monospace", "monospace"],
       },
-      backgroundImage: {
-        "purple-gradient": "bg-gradient-to-r from-red-500 to-orange-500",
+      fontSize: {
+        "2xs": ["12px", "16px"],
+        xs: ["13px", "20px"],
+        sm: ["14px", "20px"],
+        base: ["15px", "24px"],
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        lg: "10px",
+        md: "8px",
+        sm: "6px",
+      },
+      transitionTimingFunction: {
+        out: "cubic-bezier(0.22, 1, 0.36, 1)",
       },
       keyframes: {
+        rise: {
+          from: { opacity: "0", transform: "translateY(8px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -87,6 +82,7 @@ module.exports = {
         },
       },
       animation: {
+        rise: "rise 420ms cubic-bezier(0.22, 1, 0.36, 1) both",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },

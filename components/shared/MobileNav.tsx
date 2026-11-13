@@ -1,76 +1,49 @@
-"use client"
+"use client";
 
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { navLinks } from "@/constants"
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs"
-import Image from "next/image"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Button } from "../ui/button"
+import { useState } from "react";
+import Link from "next/link";
+import { Menu } from "lucide-react";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "../ui/button";
+import Logo from "../icons/Logo";
+import NavList from "./NavList";
 
 const MobileNav = () => {
-  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
 
   return (
-    <header className="header">
-      <Link href="/" className="flex items-center gap-2 md:py-2">
-        <p className="text-[#ED5E06] font-extrabold text-3xl ml-3">ImageAlchemy</p>
-      </Link>
+    <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-border bg-surface/90 px-4 backdrop-blur-md lg:hidden">
+      <Logo href="/home" />
 
-      <nav className="flex gap-2">
+      <div className="flex items-center gap-2">
         <SignedIn>
           <UserButton afterSignOutUrl="/" />
-
-          <Sheet>
-            <SheetTrigger>
-              <Image 
-                src="/assets/icons/menu.svg"
-                alt="menu"
-                width={32}
-                height={32}
-                className="cursor-pointer"
-              />
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" aria-label="Open menu">
+                <Menu strokeWidth={1.5} />
+              </Button>
             </SheetTrigger>
-            <SheetContent className="sheet-content sm:w-64">
-              <>
-                <p className="text-[#ED5E06] font-extrabold text-3xl ">ImageAlchemy</p>
-
-              <ul className="header-nav_elements">
-              {navLinks.map((link) => {
-                const isActive = link.route === pathname
-
-                return (
-                  <li 
-                    className={`${isActive && 'gradient-text'} p-18 flex whitespace-nowrap text-dark-700`}
-                    key={link.route}
-                    >
-                    <Link className="sidebar-link cursor-pointer" href={link.route}>
-                      <Image 
-                        src={link.icon}
-                        alt="logo"
-                        width={24}
-                        height={24}
-                      />
-                      {link.label}
-                    </Link>
-                  </li>
-                )
-              })}
-              </ul>
-              </>
+            <SheetContent side="left" className="w-[280px] bg-surface p-0">
+              <div className="flex h-14 items-center px-5">
+                <Logo href="/home" />
+              </div>
+              <div className="px-3 py-3">
+                <NavList onNavigate={() => setOpen(false)} />
+              </div>
             </SheetContent>
           </Sheet>
         </SignedIn>
 
         <SignedOut>
-            <Button asChild className=" bg-cover">
-              
-              <Link href="/sign-in">Login</Link>
-            </Button>
-          </SignedOut>
-      </nav>
+          <Button size="sm" asChild>
+            <Link href="/sign-in">Log in</Link>
+          </Button>
+        </SignedOut>
+      </div>
     </header>
-  )
-}
+  );
+};
 
-export default MobileNav
+export default MobileNav;

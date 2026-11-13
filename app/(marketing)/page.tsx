@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import { plans } from "@/constants";
+import Logo from "@/components/icons/Logo";
+import PlanCard from "@/components/shared/PlanCard";
 
 import Hero from "@/components/marketing/Hero";
 import HowItWorks from "@/components/marketing/HowItWorks";
@@ -12,126 +14,119 @@ import StatsStrip from "@/components/marketing/StatsStrip";
 
 export default function LandingPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-[#1A1A1A] text-white overflow-hidden">
-      {/* Floating Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-orange-500/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/3 right-1/3 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl" />
-      </div>
-
+    <div className="darkroom min-h-screen bg-canvas text-fg">
       {/* Header */}
-      <header className="relative z-10 border-b border-white/10">
-        <div className="container px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2 justify-center">
-            <Image
-              width={60}
-              height={60}
-              src="/assets/logo.png"
-              alt="Logo"
-              className="h-6 w-6 text-orange-500"
-            />
-            <span className="font-bold text-xl">ImageAlchemy</span>
-          </div>
-          <Button className="bg-orange-500 hover:bg-orange-600" asChild>
-            <Link href="/home">Get Started</Link>
-          </Button>
+      <header className="sticky top-0 z-20 border-b border-border bg-canvas/85 backdrop-blur-md">
+        <div className="container flex h-16 items-center justify-between">
+          <Logo />
+          <nav className="flex items-center gap-1">
+            <a
+              href="#how-it-works"
+              className="hidden rounded-md px-3 py-2 text-sm text-fg-2 transition-colors duration-150 hover:text-fg sm:block"
+            >
+              How it works
+            </a>
+            <a
+              href="#pricing"
+              className="hidden rounded-md px-3 py-2 text-sm text-fg-2 transition-colors duration-150 hover:text-fg sm:block"
+            >
+              Pricing
+            </a>
+            <SignedOut>
+              <Link
+                href="/sign-in"
+                className="rounded-md px-3 py-2 text-sm text-fg-2 transition-colors duration-150 hover:text-fg"
+              >
+                Log in
+              </Link>
+            </SignedOut>
+            <Button size="sm" className="ml-2" asChild>
+              <Link href="/home">
+                <SignedIn>Open app</SignedIn>
+                <SignedOut>Get started</SignedOut>
+              </Link>
+            </Button>
+          </nav>
         </div>
       </header>
 
-      <Hero />
-      <HowItWorks />
-      <FeaturesBento />
-      <DemoShowcase />
-      <StatsStrip />
+      <main>
+        <Hero />
+        <HowItWorks />
+        <FeaturesBento />
+        <DemoShowcase />
+        <StatsStrip />
 
-      {/* Pricing Teaser */}
-      <section className="relative z-10 py-20 lg:py-32 border-t border-white/10">
-        <div className="container px-4">
-          <h2 className="text-3xl lg:text-5xl font-bold mb-12 text-center">
-            Simple, Credit-Based Pricing
-          </h2>
-          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {plans.map((plan) => (
-              <div
-                key={plan._id}
-                className="p-6 rounded-2xl bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 text-center"
+        {/* Pricing */}
+        <section id="pricing" className="scroll-mt-16 border-t border-border">
+          <div className="container py-24 lg:py-32">
+            <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
+              <h2 className="max-w-[28rem] text-[32px] font-medium leading-[1.15] tracking-[-0.02em] lg:text-[40px]">
+                Pay once for credits, no subscription
+              </h2>
+              <Link
+                href="/credits"
+                className="inline-flex items-center gap-1.5 text-sm text-fg-2 transition-colors duration-150 hover:text-fg"
               >
-                <h3 className="font-semibold text-xl mb-2">{plan.name}</h3>
-                <p className="text-4xl font-bold mb-1">
-                  ${plan.price}
-                  {plan.price > 0 && (
-                    <span className="text-base text-gray-400 font-normal">
-                      {" "}
-                      one-time
-                    </span>
-                  )}
-                </p>
-                <p className="text-gray-400">{plan.credits} credits</p>
-              </div>
-            ))}
+                Compare plans
+                <ArrowRight className="size-4" strokeWidth={1.5} />
+              </Link>
+            </div>
+            <ul className="mt-12 grid gap-4 md:grid-cols-3">
+              {plans.map((plan) => (
+                <PlanCard
+                  key={plan._id}
+                  plan={plan}
+                  action={
+                    <Button
+                      variant={plan.price === 0 ? "default" : "secondary"}
+                      className="w-full"
+                      asChild
+                    >
+                      <Link href={plan.price === 0 ? "/home" : "/credits"}>
+                        {plan.price === 0 ? "Start free" : `Get ${plan.credits.toLocaleString("en-US")} credits`}
+                      </Link>
+                    </Button>
+                  }
+                />
+              ))}
+            </ul>
           </div>
-          <div className="text-center mt-10">
-            <Link
-              href="/credits"
-              className="inline-flex items-center gap-2 text-orange-500 hover:text-orange-400 transition-colors"
-            >
-              View full plans
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      {/* CTA Section */}
-      <section className="relative z-10 py-20 lg:py-32 border-t border-white/10">
-        <div className="container px-4">
-          <div className="relative p-8 lg:p-12 rounded-2xl bg-gradient-to-br from-orange-500/10 to-purple-500/10 border border-white/10 overflow-hidden">
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-orange-500/20 rounded-full blur-3xl" />
+        {/* CTA */}
+        <section className="border-t border-border">
+          <div className="container flex flex-col items-start justify-between gap-8 py-24 md:flex-row md:items-center lg:py-32">
+            <div>
+              <h2 className="text-[32px] font-medium leading-[1.15] tracking-[-0.02em] lg:text-[40px]">
+                Start with 20 free credits
+              </h2>
+              <p className="mt-3 text-base text-fg-2">
+                No credit card required
+              </p>
             </div>
-            <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
-              <div className="text-center lg:text-left">
-                <h2 className="text-3xl lg:text-5xl font-bold mb-4">
-                  Start Creating Today
-                </h2>
-                <p className="text-gray-400 text-lg max-w-xl">
-                  Start editing smarter &mdash; no credit card required.
-                </p>
-              </div>
-              <Button
-                size="lg"
-                className="bg-orange-500 hover:bg-orange-600 text-lg px-8"
-                asChild
-              >
-                <Link href="/home">Get Started</Link>
-              </Button>
-            </div>
+            <Button size="lg" asChild>
+              <Link href="/home">
+                Start editing
+                <ArrowRight />
+              </Link>
+            </Button>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-white/10 py-10">
-        <div className="container px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <Image
-              width={24}
-              height={24}
-              src="/assets/logo.png"
-              alt="Logo"
-              className="h-5 w-5"
-            />
-            <span className="font-semibold">ImageAlchemy</span>
-          </div>
-          <p className="text-sm text-gray-500">
-            &copy; {new Date().getFullYear()} ImageAlchemy. All rights
-            reserved.
+      <footer className="border-t border-border">
+        <div className="container flex flex-col gap-4 py-10 sm:flex-row sm:items-center sm:justify-between">
+          <Logo />
+          <p className="text-xs text-fg-3">
+            &copy; {new Date().getFullYear()} ImageAlchemy
           </p>
           <a
             href="https://github.com/Stroller15/ImageAlchemy"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm text-gray-400 hover:text-orange-500 transition-colors"
+            className="text-xs text-fg-3 transition-colors duration-150 hover:text-fg"
           >
             GitHub
           </a>

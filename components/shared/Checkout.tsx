@@ -28,8 +28,8 @@ const Checkout = ({
     const query = new URLSearchParams(window.location.search);
     if (query.get("success")) {
       toast({
-        title: "Order placed!",
-        description: "You will receive an email confirmation",
+        title: "Order placed",
+        description: "You'll get an email confirmation shortly",
         duration: 5000,
         className: "success-toast",
       });
@@ -37,8 +37,8 @@ const Checkout = ({
 
     if (query.get("canceled")) {
       toast({
-        title: "Order canceled!",
-        description: "Continue to shop around and checkout when you're ready",
+        title: "Order canceled",
+        description: "Nothing was charged. Check out whenever you're ready",
         duration: 5000,
         className: "error-toast",
       });
@@ -62,9 +62,10 @@ const Checkout = ({
         <Button
           type="submit"
           role="link"
-          className="w-full bg-[#ED5E06] rounded-full  hover:opacity-75 bg-cover"
+          variant="default"
+          className="w-full"
         >
-          Buy Credit
+          Buy {credits.toLocaleString("en-US")} credits
         </Button>
       </section>
     </form>

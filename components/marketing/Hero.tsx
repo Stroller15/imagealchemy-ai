@@ -1,44 +1,50 @@
 import Link from "next/link";
-import { Sparkles, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import CropFrame from "@/components/shared/CropFrame";
+import BeforeAfter from "./BeforeAfter";
+import { samples } from "./samples";
 
 export default function Hero() {
   return (
-    <section className="relative z-10 flex-1 py-20 lg:py-32">
-      <div className="container px-4">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/10 border border-orange-500/20 mb-8">
-            <Sparkles className="h-4 w-4 text-orange-500" />
-            <span className="text-sm text-orange-500">
-              AI-Powered Image Editing
-            </span>
-          </div>
-          <h1 className="text-5xl lg:text-7xl font-bold tracking-tight bg-gradient-to-br from-white to-orange-500/50 bg-clip-text text-transparent mb-8">
-            Transform Imagination into Reality
+    <section className="relative">
+      <div className="container grid items-center gap-12 pb-20 pt-12 md:pt-16 lg:min-h-[calc(100svh-64px)] lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-16 lg:py-16">
+        <div className="max-w-[34rem] animate-rise">
+          <h1 className="text-[40px] font-medium leading-[1.05] tracking-[-0.03em] text-fg sm:text-[56px] lg:text-[64px]">
+            Restore, erase and extend your photos
           </h1>
-          <p className="text-xl text-gray-400 mb-12">
-            Restore, generate, remove, recolor, and more &mdash; powered by AI,
-            ready in a few clicks.
+          <p className="mt-6 max-w-[30rem] text-[18px] leading-[28px] text-fg-2">
+            Bring back faded prints, remove objects or backgrounds, recolor
+            anything and extend a shot to a new aspect ratio. Each edit uses
+            one credit, and you start with 20.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button
-              size="lg"
-              className="bg-orange-500 hover:bg-orange-600 text-lg px-8"
-              asChild
-            >
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <Button size="lg" asChild>
               <Link href="/home">
-                Start Creating
-                <ArrowRight className="ml-2 h-5 w-5" />
+                Start editing
+                <ArrowRight />
               </Link>
             </Button>
-            <Button
-              size="lg"
-              variant="ghost"
-              className="text-lg px-8 border border-white/20 text-white hover:bg-white/5 hover:text-white"
-              asChild
-            >
+            <Button size="lg" variant="ghost" asChild>
               <a href="#how-it-works">See how it works</a>
             </Button>
+          </div>
+        </div>
+
+        <div className="animate-rise [animation-delay:60ms]">
+          <CropFrame inset={12}>
+            <BeforeAfter
+              before={samples.restore.before}
+              after={samples.restore.after}
+              alt="Portrait of a couple in a park"
+              width={1200}
+              height={800}
+              priority
+            />
+          </CropFrame>
+          <div className="mt-6 flex items-center justify-between font-mono text-2xs text-fg-3">
+            <span>Image Restore</span>
+            <span className="tabular">1200 × 800 · 1 credit</span>
           </div>
         </div>
       </div>

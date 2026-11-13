@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { Coins } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,52 +18,23 @@ export const InsufficientCreditsModal = () => {
 
   return (
     <AlertDialog defaultOpen>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <div className="flex-between">
-            <p className="p-16-semibold text-dark-400">Insufficient Credits</p>
-            <AlertDialogCancel
-              className="border-0 p-0 hover:bg-transparent"
-              onClick={() => router.push("/profile")}
-            >
-              <Image
-                src="/assets/icons/close.svg"
-                alt="credit coins"
-                width={24}
-                height={24}
-                className="cursor-pointer"
-              />
-            </AlertDialogCancel>
-          </div>
-
-          <Image
-            src="/assets/images/stacked-coins.png"
-            alt="credit coins"
-            width={462}
-            height={122}
-          />
-
-          <AlertDialogTitle className="p-24-bold text-dark-600">
-            Oops.... Looks like you&#39;ve run out of free credits!
-          </AlertDialogTitle>
-
-          <AlertDialogDescription className="p-16-regular py-3">
-            No worries, though - you can keep enjoying our services by grabbing
-            more credits.
+      <AlertDialogContent className="gap-6">
+        <AlertDialogHeader className="gap-2">
+          <span className="mb-2 flex size-10 items-center justify-center rounded-full bg-raised text-fg-2 hairline">
+            <Coins className="size-[18px]" strokeWidth={1.5} />
+          </span>
+          <AlertDialogTitle>You&rsquo;re out of credits</AlertDialogTitle>
+          <AlertDialogDescription className="text-sm text-fg-2">
+            Each transformation uses 1 credit. Buy a pack to keep editing,
+            your saved images stay where they are.
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel
-            className="button w-full bg-purple-100 text-dark-400"
-            onClick={() => router.push("/profile")}
-          >
-            No, Cancel
+        <AlertDialogFooter className="gap-2">
+          <AlertDialogCancel onClick={() => router.push("/profile")}>
+            Not now
           </AlertDialogCancel>
-          <AlertDialogAction
-            className="button w-full bg-purple-gradient  bg-cover"
-            onClick={() => router.push("/credits")}
-          >
-            Yes, Proceed
+          <AlertDialogAction onClick={() => router.push("/credits")}>
+            Buy credits
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { Search as SearchIcon } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
@@ -9,7 +9,7 @@ import { formUrlQuery, removeKeysFromQuery } from "@/lib/utils";
 export const Search = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(searchParams.get("query") ?? "");
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -35,17 +35,17 @@ export const Search = () => {
   }, [router, searchParams, query]);
 
   return (
-    <div className="search">
-      <Image
-        src="/assets/icons/search.svg"
-        alt="search"
-        width={24}
-        height={24}
+    <div className="relative w-full sm:w-64">
+      <SearchIcon
+        className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-fg-3"
+        strokeWidth={1.5}
       />
-
       <Input
-        className="search-field"
+        type="search"
+        aria-label="Search edits"
+        className="pl-9"
         placeholder="Search"
+        value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
     </div>

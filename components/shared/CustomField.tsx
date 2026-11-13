@@ -32,7 +32,11 @@ export const CustomField = ({
       name={name}
       render={({ field }) => (
         <FormItem className={className}>
-          {formLabel && <FormLabel>{formLabel}</FormLabel>}
+          {formLabel && (
+            <FormLabel className="text-xs font-medium text-fg-2">
+              {formLabel}
+            </FormLabel>
+          )}
           <FormControl>{render({ field })}</FormControl>
           <FormMessage />
         </FormItem>
