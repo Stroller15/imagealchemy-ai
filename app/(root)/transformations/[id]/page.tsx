@@ -57,10 +57,10 @@ const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
         ))}
       </dl>
 
-      <section className="mt-8 grid gap-6 rounded-[16px] bg-sunken p-5 md:grid-cols-2 md:p-6">
+      <section className="mt-8 grid gap-6 md:grid-cols-2">
         <div className="flex flex-col gap-3">
           <div className="flex h-8 items-center justify-between">
-            <h3 className="text-xs font-medium text-fg-2">Original</h3>
+            <h3 className="text-sm font-medium text-fg">Original</h3>
             <span className="font-mono text-2xs text-fg-3 tabular">
               {image.width} × {image.height}
             </span>
