@@ -1,98 +1,158 @@
-> [!NOTE]  
-> - The underlying AI technology behind these features is still experimental, the quality of results may vary.
-> - For best results of image restore feature, upload an image that is blurry or over-compressed.
-
-  <hr>
-
-<!-- PROJECT LOGO -->
-<br />
 <div align="center">
-  <a href="https://image-alchemy-sh.vercel.app/">
-    <img width="500" alt="Xnapper-2024-06-28-15 48 20" src="https://github.com/Stroller15/ImageAlchemy/assets/84174011/6f6dc3c6-655a-4ec5-b0b0-d4bed07a516e">
 
-  </a>
+<img src="app/icon.svg" width="48" height="48" alt="ImageAlchemy logo" />
 
-  <h3 align="center">ImageAlchemy</h3>
+# ImageAlchemy
 
-  <p align="center">
-    Transform Imagination into Reality with ImageAlchemy!
-    <br />
-    <a href="https://image-alchemy-sh.vercel.app/"><strong>Live »</strong></a> ..
-    <a href="https://image-alchemy-sh.vercel.app/">View Demo</a>
-    
-  </p>
+Restore, erase and extend your photos in the browser.
+
+[Live app](https://image-alchemy-sh.vercel.app/) · [How it works](#how-it-works) · [Run it locally](#run-it-locally)
+
 </div>
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/landing-dark.webp" />
+  <img src="docs/screenshots/landing-light.webp" alt="ImageAlchemy landing page with a before and after photo restore slider" />
+</picture>
 
-## Introduction
-Transform Imagination into Reality with ImageAlchemy, a powerful web application. It offers advanced features like image restoration and generative resizing into square, standard portrait, and phone portrait formats, along with object removal, recoloring, and background removal. Ideal for photographers, designers, and enthusiasts, ImageAlchemy redefines image editing with innovation and ease of use.
+## What it does
 
-<br/>
+ImageAlchemy is a photo editor built on Cloudinary's image models. Upload a photo, pick an edit, preview the result next to the original, then save it to your library or download it at full size. Every transformation costs one credit, and new accounts start with 20.
 
-<img width="2000" alt="imagealchey" src="https://github.com/Stroller15/ImageAlchemy/assets/84174011/cf96285a-7b7f-47f0-85e9-ad42a4aa1c0d">
+| Tool | What it does |
+| --- | --- |
+| **Image Restore** | Removes noise, scratches and blur from old or damaged photos |
+| **Generative Fill** | Extends a photo to a new aspect ratio with outpainting: square (1:1), portrait (3:4) or phone (9:16) |
+| **Object Remove** | Name an object and it is erased from the photo, along with its shadow |
+| **Object Recolor** | Name an object and a color, and only that object changes |
+| **Background Remove** | Cuts the subject out cleanly, ready for a new background |
 
-### **Demo Video(Click here)**
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/before-after-dark.webp" />
+  <img src="docs/screenshots/before-after-light.webp" alt="Before and after examples of Object Recolor and Background Remove" />
+</picture>
 
+> [!NOTE]
+> The AI behind these tools is still experimental, so result quality varies. Image Restore works best on photos that are blurry or over-compressed.
 
-[![Video](https://img.youtube.com/vi/voWt_xbec5U/maxresdefault.jpg)](https://www.youtube.com/watch?v=voWt_xbec5U)
+## How it works
 
+1. **Upload a photo.** It is stored on Cloudinary with your account.
+2. **Choose an edit.** Fill in the settings for the tool (a prompt, a color or an aspect ratio) and apply it. Original and Result appear side by side.
+3. **Save and download.** Saved edits land in your library on Home and Profile, where you can reopen, edit, download or delete them.
 
-## Behind the Code
-![image](https://github.com/Stroller15/ImageAlchemy/assets/84174011/99e7f453-3630-4bd1-877d-4f26cae788e2)
+### Credits
 
+Credits are bought as one-time packs through Stripe, with no subscription.
 
-## Features/Use case
-- **Image Restore** (Remove noise and imperfections from an image): Restore old, damaged, or degraded images to their original quality and clarity using advanced image restoration techniques.
-  
-    <details>
-      <summary>Click to see demo</summary>
-      <img width="1357" alt="restore" src="https://github.com/Stroller15/ImageAlchemy/assets/84174011/6deae311-8aba-482c-8416-7549f1929912">
-    </details>
-  
-- **Generative Fill** (Extend an image's proportions with AI outpainting): Convert images into predefined formats such as square, standard portrait, and phone portrait, optimizing the image for different display requirements with seamless integration and quality preservation.
+| Plan | Price | Credits | Per credit |
+| --- | --- | --- | --- |
+| Free | $0 | 20 on sign-up | Free |
+| Pro Package | $40 | 120 | $0.33 |
+| Premium Package | $199 | 2,000 | $0.10 |
 
-    <details>
-      <summary>Click to see demo</summary>
-      <img width="1381" alt="fill" src="https://github.com/Stroller15/ImageAlchemy/assets/84174011/37b347e1-559a-47b1-8d6b-969d751797e2">
-    </details>
+## Design
 
-- **Object Remove** (Detect and remove objects within images): Effortlessly remove unwanted objects or elements from images, providing a cleaner and more focused visual composition.
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/features-dark.webp" />
+  <img src="docs/screenshots/features-light.webp" alt="The tools section of the landing page" />
+</picture>
 
-    <details>
-     <summary>Click to see demo</summary>
-    <img width="1386" alt="remove" src="https://github.com/Stroller15/ImageAlchemy/assets/84174011/ca9268ed-1c48-403e-9cb8-64f6e374c2eb">
-    </details>
+The UI is built around the idea of a photo darkroom and lightbox.
 
-- **Object Recolor** (Detect objects with natural language and change their color): Change the color of specific objects within an image, allowing for creative customization and adjustment without altering the overall image.
+- **Light and dark themes.** The site follows the system setting by default, and a System / Light / Dark toggle in the sidebar, mobile menu and landing footer overrides it.
+- **Neutral app, warm landing.** Inside the app, surfaces stay neutral grey in both themes so photo colors read true. The landing and auth pages use warm paper in light mode and a warm near-black in dark mode.
+- **One accent.** Ember `#ED5E06` marks the primary action, the selection and key figures, and nothing else.
+- **Type.** Geist for the interface and Geist Mono for figures and meta like `1 credit` or `1200 × 800`.
+- **Signature detail.** Crop-corner marks frame photos wherever an image is shown.
 
-    <details>
-     <summary>Click to see demo</summary>
-      <img width="1259" alt="recolor" src="https://github.com/Stroller15/ImageAlchemy/assets/84174011/95d0d07f-e257-4dd8-988e-ca5013b7a201">
-    </details>
+All colors are CSS variables in [`app/globals.css`](app/globals.css), mapped to Tailwind in [`tailwind.config.ts`](tailwind.config.ts). Components use role names like `bg-surface`, `text-fg-2` and `border-border`, so a theme change never touches component code.
 
-- **Background Remove** (Detect and remove background within images): Instantly remove the background from images, making it easy to isolate subjects or objects and integrate them seamlessly into different backgrounds or contexts.
-    <details>
-     <summary>Click to see demo</summary>
-    <img width="1073" alt="bgremove" src="https://github.com/Stroller15/ImageAlchemy/assets/84174011/bf555264-6eb9-47b9-9b69-593e03926583">
-    </details>
+## Tech stack
 
-## Tech used in this project
+| Area | Tools |
+| --- | --- |
+| Framework | Next.js 14 (App Router), React 18, TypeScript |
+| UI | Tailwind CSS, Radix UI, Lucide icons, Geist, next-themes |
+| Image processing | Cloudinary AI, next-cloudinary |
+| Auth | Clerk |
+| Database | MongoDB with Mongoose |
+| Payments | Stripe |
+| Forms | React Hook Form, Zod |
 
-- **AI** : Cloudinary-AI
+<details>
+<summary>Architecture diagram</summary>
 
-- **Programming Languages:**  JavaScript, TypeScript
+![ImageAlchemy architecture](https://github.com/Stroller15/ImageAlchemy/assets/84174011/99e7f453-3630-4bd1-877d-4f26cae788e2)
 
-- **Frontend:**  Next.js, React, TailwindCSS, Radix UI, Lucide Icons
+</details>
 
-- **Backend:**  Node.js, Mongoose
+## Run it locally
 
-- **Database:**  MongoDB
+Requires Node.js 26 (see `engines` in `package.json`).
 
-- **Cloud Services:**  Cloudinary
+```bash
+git clone https://github.com/Stroller15/imagealchemy-ai.git
+cd imagealchemy-ai
+npm install
+```
 
-- **Payment Integration:**  Stripe
+Create `.env.local` with these variables:
 
-- **Form Management:**  React Hook Form
+```bash
+# MongoDB
+MONGODB_URL=
 
-- **Authentication and User Management:**  Clerk
+# Clerk
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+WEBHOOK_SECRET=
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/home
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/home
 
+# Cloudinary
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+
+# Stripe
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SECRET=
+NEXT_PUBLIC_SERVER_URL=http://localhost:3000
+```
+
+If the project is linked to Vercel, `npx vercel env pull .env.local` fills these in for you.
+
+Then start the dev server:
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+### Webhooks
+
+- **Clerk → `/api/webhooks/clerk`** creates, updates and deletes the matching user in MongoDB. It needs `WEBHOOK_SECRET`. Accounts created before the webhook was connected have no database record, so sign up again after pointing the app at a new database.
+- **Stripe → `/api/webhooks/stripe`** adds purchased credits to the buyer. It needs `STRIPE_WEBHOOK_SECRET`.
+
+## Project structure
+
+```
+app/
+  (marketing)/        Landing page
+  (auth)/             Sign-in and sign-up, with the demo account panel
+  (root)/             Signed-in app: home, editor, image details, profile, credits
+  api/webhooks/       Clerk and Stripe webhooks
+components/
+  marketing/          Landing sections and the before/after slider
+  shared/             App shell, editor, collection, plan cards, theme toggle
+  ui/                 Radix-based primitives (button, input, select, dialog, toast)
+constants/            Navigation, plans, transformation types, aspect ratios
+lib/
+  actions/            Server actions for images, users and transactions
+  database/           Mongoose connection and models
+```
