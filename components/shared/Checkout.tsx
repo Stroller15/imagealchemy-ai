@@ -29,7 +29,7 @@ const Checkout = ({
     if (query.get("success")) {
       toast({
         title: "Order placed",
-        description: "You'll get an email confirmation shortly",
+        description: "Test payment complete. Your credits will show up in your balance shortly",
         duration: 5000,
         className: "success-toast",
       });

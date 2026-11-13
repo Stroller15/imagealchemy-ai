@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { plans } from "@/constants";
 import Logo from "@/components/icons/Logo";
 import PlanCard from "@/components/shared/PlanCard";
+import DemoCheckoutNote from "@/components/shared/DemoCheckoutNote";
 import ThemeToggle from "@/components/shared/ThemeToggle";
 
 import Hero from "@/components/marketing/Hero";
@@ -92,6 +93,7 @@ export default function LandingPage() {
                 />
               ))}
             </ul>
+            <DemoCheckoutNote className="mt-4" />
           </div>
         </section>
 
