@@ -21,6 +21,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import Spinner from "./Spinner";
+import { useToast } from "@/components/ui/use-toast";
 import {
   Form,
   FormControl,
@@ -63,6 +65,7 @@ const TransformationForm = ({
   const [transformationConfig, setTransformationConfig] = useState(config);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+  const { toast } = useToast();
 
   const initialValues =
     data && action === "Update"
@@ -83,6 +86,16 @@ const TransformationForm = ({
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!data && !image) {
+      toast({
+        title: "Upload an image first",
+        description: "Add a photo, apply the transformation, then save",
+        duration: 5000,
+        className: "error-toast",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     if (data || image) {
@@ -119,6 +132,8 @@ const TransformationForm = ({
             form.reset();
             setImage(data);
             router.push(`/transformations/${newImage._id}`);
+            // Stay in the saving state until the next page takes over.
+            return;
           }
         } catch (error) {
           console.log(error);
@@ -138,6 +153,7 @@ const TransformationForm = ({
 
           if (updatedImage) {
             router.push(`/transformations/${updatedImage._id}`);
+            return;
           }
         } catch (error) {
           console.log(error);
@@ -145,6 +161,12 @@ const TransformationForm = ({
       }
     }
     setIsSubmitting(false);
+    toast({
+      title: "Couldn't save the image",
+      description: "Check your connection and try again",
+      duration: 5000,
+      className: "error-toast",
+    });
   }
 
   const onSelectFieldHandler = (
@@ -349,7 +371,14 @@ const TransformationForm = ({
               disabled={isTransforming || newTransformation === null}
               onClick={onTransformHandler}
             >
-              {isTransforming ? "Applying" : "Apply transformation"}
+              {isTransforming ? (
+                <>
+                  <Spinner />
+                  Applying
+                </>
+              ) : (
+                "Apply transformation"
+              )}
             </Button>
             <Button
               type="submit"
@@ -357,8 +386,16 @@ const TransformationForm = ({
               size="lg"
               className="w-full"
               disabled={isSubmitting}
+              aria-busy={isSubmitting}
             >
-              {isSubmitting ? "Saving" : "Save image"}
+              {isSubmitting ? (
+                <>
+                  <Spinner />
+                  Saving
+                </>
+              ) : (
+                "Save image"
+              )}
             </Button>
           </div>
           <p className="font-mono text-2xs text-fg-3 tabular">

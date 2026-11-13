@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { deleteImage } from "@/lib/actions/image.actions";
 import { Trash2 } from "lucide-react";
 import { Button } from "../ui/button";
+import Spinner from "./Spinner";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -63,7 +64,14 @@ export const DeleteConfirmation = ({ imageId }: { imageId: string }) => {
             onClick={handleDelete}
             disabled={isPending}
           >
-            {isPending ? "Deleting" : "Delete image"}
+            {isPending ? (
+              <>
+                <Spinner />
+                Deleting
+              </>
+            ) : (
+              "Delete image"
+            )}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
