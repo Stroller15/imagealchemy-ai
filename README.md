@@ -45,6 +45,9 @@ ImageAlchemy is a photo editor built on Cloudinary's image models. Upload a phot
 
 Credits are bought as one-time packs through Stripe, with no subscription.
 
+> [!IMPORTANT]
+> This is a portfolio project, so Stripe runs in **test mode** and nothing is ever charged. To try checkout, use card `4242 4242 4242 4242` with any future expiry date and any CVC. The Credits page and the landing pricing section say the same.
+
 | Plan | Price | Credits | Per credit |
 | --- | --- | --- | --- |
 | Free | $0 | 20 on sign-up | Free |
@@ -137,7 +140,7 @@ Open [http://localhost:3000](http://localhost:3000).
 ### Webhooks
 
 - **Clerk → `/api/webhooks/clerk`** creates, updates and deletes the matching user in MongoDB. It needs `WEBHOOK_SECRET`. Accounts created before the webhook was connected have no database record, so sign up again after pointing the app at a new database.
-- **Stripe → `/api/webhooks/stripe`** adds purchased credits to the buyer. It needs `STRIPE_WEBHOOK_SECRET`.
+- **Stripe → `/api/webhooks/stripe`** adds purchased credits to the buyer on `checkout.session.completed`. It needs `STRIPE_WEBHOOK_SECRET`. Create the webhook with Stripe's Test mode switch on, and use test keys (`pk_test_…`, `sk_test_…`) everywhere.
 
 ## Project structure
 

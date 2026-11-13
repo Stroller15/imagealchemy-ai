@@ -6,6 +6,7 @@ import { plans } from "@/constants";
 import { getUserById } from "@/lib/actions/user.actions";
 import Checkout from "@/components/shared/Checkout";
 import PlanCard from "@/components/shared/PlanCard";
+import DemoCheckoutNote from "@/components/shared/DemoCheckoutNote";
 
 const Credits = async () => {
   const { userId } = auth();
@@ -29,7 +30,9 @@ const Credits = async () => {
         }
       />
 
-      <ul className="mt-8 grid gap-4 md:grid-cols-3">
+      <DemoCheckoutNote className="mt-8" />
+
+      <ul className="mt-4 grid gap-4 md:grid-cols-3">
         {plans.map((plan) => (
           <PlanCard
             key={plan.name}
