@@ -12,7 +12,7 @@ const buttonVariants = cva(
         default:
           "bg-fg text-surface shadow-[inset_0_1px_0_rgb(255_255_255/0.12)] hover:bg-fg/90",
         ember:
-          "bg-ember-strong text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.16)] hover:bg-ember-strong/90",
+          "bg-ember-fill text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.16)] hover:bg-ember-fill/90",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:

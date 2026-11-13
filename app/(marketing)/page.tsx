@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { plans } from "@/constants";
 import Logo from "@/components/icons/Logo";
 import PlanCard from "@/components/shared/PlanCard";
+import ThemeToggle from "@/components/shared/ThemeToggle";
 
 import Hero from "@/components/marketing/Hero";
 import HowItWorks from "@/components/marketing/HowItWorks";
@@ -14,7 +15,7 @@ import StatsStrip from "@/components/marketing/StatsStrip";
 
 export default function LandingPage() {
   return (
-    <div className="darkroom min-h-screen bg-canvas text-fg">
+    <div className="warm min-h-screen bg-canvas text-fg">
       {/* Header */}
       <header className="sticky top-0 z-20 border-b border-border bg-canvas/85 backdrop-blur-md">
         <div className="container flex h-16 items-center justify-between">
@@ -122,6 +123,7 @@ export default function LandingPage() {
           <p className="text-xs text-fg-3">
             &copy; {new Date().getFullYear()} ImageAlchemy
           </p>
+          <div className="flex items-center gap-4">
           <a
             href="https://github.com/Stroller15/ImageAlchemy"
             target="_blank"
@@ -130,6 +132,8 @@ export default function LandingPage() {
           >
             GitHub
           </a>
+            <ThemeToggle />
+          </div>
         </div>
       </footer>
     </div>

@@ -5,6 +5,7 @@ import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Button } from "../ui/button";
 import Logo from "../icons/Logo";
 import NavList from "./NavList";
+import ThemeToggle from "./ThemeToggle";
 
 const Sidebar = () => {
   return (
@@ -24,11 +25,12 @@ const Sidebar = () => {
         </SignedOut>
       </div>
 
-      <SignedIn>
-        <div className="flex h-14 items-center border-t border-border px-4">
+      <div className="flex h-14 items-center justify-between gap-2 border-t border-border px-4">
+        <SignedIn>
           <UserButton afterSignOutUrl="/" showName />
-        </div>
-      </SignedIn>
+        </SignedIn>
+        <ThemeToggle className="ml-auto" />
+      </div>
     </aside>
   );
 };
