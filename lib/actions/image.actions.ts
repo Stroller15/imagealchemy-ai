@@ -5,7 +5,9 @@ import { connectToDatabase } from "../database/mongoose";
 import { handleError } from "../utils";
 import User from "../database/models/user.model";
 import Image from "../database/models/image.model";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { isValidObjectId } from "mongoose";
+import { requireCurrentUser } from "../server/current-user";
 
 
 /** Escape user input so it is matched literally inside a RegExp. */
@@ -19,15 +21,9 @@ const populateUser = (query: any) => query.populate({
 })
 
 // ADD IMAGE
-export async function addImage({ image, userId, path }: AddImageParams) {
+export async function addImage({ image, path }: AddImageParams) {
   try {
-    await connectToDatabase();
-
-    const author = await User.findById(userId);
-
-    if (!author) {
-      throw new Error("User not found");
-    }
+    const author = await requireCurrentUser();
 
     const newImage = await Image.create({
       ...image,
@@ -43,19 +39,23 @@ export async function addImage({ image, userId, path }: AddImageParams) {
 }
 
 // UPDATE IMAGE
-export async function updateImage({ image, userId, path }: UpdateImageParams) {
+export async function updateImage({ image, path }: UpdateImageParams) {
   try {
-    await connectToDatabase();
+    const user = await requireCurrentUser();
 
-    const imageToUpdate = await Image.findById(image._id);
+    const imageToUpdate = isValidObjectId(image._id)
+      ? await Image.findOne({ _id: image._id, author: user._id })
+      : null;
 
-    if (!imageToUpdate || imageToUpdate.author.toHexString() !== userId) {
+    if (!imageToUpdate) {
       throw new Error("Unauthorized or image not found");
     }
 
+    // Never let the client move an image to another author.
+    const { _id, ...changes } = image;
     const updatedImage = await Image.findByIdAndUpdate(
       imageToUpdate._id,
-      image,
+      { ...changes, author: user._id, updatedAt: new Date() },
       { new: true }
     )
 
@@ -69,40 +69,42 @@ export async function updateImage({ image, userId, path }: UpdateImageParams) {
 
 // DELETE IMAGE
 export async function deleteImage(imageId: string) {
-  try {
-    await connectToDatabase();
+  const user = await requireCurrentUser();
 
-    await Image.findByIdAndDelete(imageId);
-  } catch (error) {
-    handleError(error)
-  } finally{
-    redirect('/')
-  }
+  const deleted = isValidObjectId(imageId)
+    ? await Image.findOneAndDelete({ _id: imageId, author: user._id })
+    : null;
+
+  if (!deleted) throw new Error("Unauthorized or image not found");
+
+  revalidatePath("/home");
+  revalidatePath("/profile");
+  redirect("/home");
 }
 
 // GET IMAGE
 export async function getImageById(imageId: string) {
-  try {
-    await connectToDatabase();
+  const user = await requireCurrentUser();
 
-    const image = await populateUser(Image.findById(imageId));
+  // Someone else's image looks exactly like a missing one.
+  if (!isValidObjectId(imageId)) notFound();
+  const image = await populateUser(
+    Image.findOne({ _id: imageId, author: user._id })
+  );
+  if (!image) notFound();
 
-    if(!image) throw new Error("Image not found");
-
-    return JSON.parse(JSON.stringify(image));
-  } catch (error) {
-    handleError(error)
-  }
+  return JSON.parse(JSON.stringify(image));
 }
 
 // GET IMAGES
+// GET THE SIGNED-IN USER'S IMAGES (Home), with optional search
 export async function getAllImages({ limit = 9, page = 1, searchQuery = '' }: {
   limit?: number;
   page: number;
   searchQuery?: string;
 }) {
   try {
-    await connectToDatabase();
+    const user = await requireCurrentUser();
 
     // Search the saved edits themselves. The previous version ran a
     // Cloudinary search on file metadata, which never matched the titles
@@ -111,6 +113,7 @@ export async function getAllImages({ limit = 9, page = 1, searchQuery = '' }: {
     const pattern = new RegExp(escapeRegex(term), "i");
     const query = term
       ? {
+          author: user._id,
           $or: [
             { title: pattern },
             { prompt: pattern },
@@ -118,7 +121,7 @@ export async function getAllImages({ limit = 9, page = 1, searchQuery = '' }: {
             { transformationType: pattern },
           ],
         }
-      : {};
+      : { author: user._id };
 
     const skipAmount = (Number(page) -1) * limit;
 
@@ -128,12 +131,10 @@ export async function getAllImages({ limit = 9, page = 1, searchQuery = '' }: {
       .limit(limit);
     
     const totalImages = await Image.find(query).countDocuments();
-    const savedImages = await Image.find().countDocuments();
 
     return {
       data: JSON.parse(JSON.stringify(images)),
       totalPage: Math.ceil(totalImages / limit),
-      savedImages,
     }
   } catch (error) {
     handleError(error)
@@ -144,14 +145,13 @@ export async function getAllImages({ limit = 9, page = 1, searchQuery = '' }: {
 export async function getUserImages({
   limit = 9,
   page = 1,
-  userId,
 }: {
   limit?: number;
   page: number;
-  userId: string;
 }) {
   try {
-    await connectToDatabase();
+    const user = await requireCurrentUser();
+    const userId = user._id;
 
     const skipAmount = (Number(page) - 1) * limit;
 
