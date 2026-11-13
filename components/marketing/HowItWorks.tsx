@@ -1,53 +1,42 @@
-import { UploadCloud, Wand2, Download } from "lucide-react";
-
 const steps = [
   {
     number: "01",
-    icon: <UploadCloud className="h-6 w-6 text-orange-500" />,
-    title: "Upload your image",
-    description: "Drop in any photo you want to transform.",
+    title: "Upload a photo",
+    description: "Pick any image from your device. It is stored with your account.",
   },
   {
     number: "02",
-    icon: <Wand2 className="h-6 w-6 text-orange-500" />,
-    title: "Pick a transformation",
+    title: "Choose an edit",
     description:
-      "Restore, fill, remove, recolor, or strip the background.",
+      "Restore, fill, remove, recolor or strip the background, then preview the result.",
   },
   {
     number: "03",
-    icon: <Download className="h-6 w-6 text-orange-500" />,
-    title: "Get your result",
-    description: "Download the AI-edited image in seconds.",
+    title: "Save and download",
+    description: "Keep the edit in your library and download it at full size.",
   },
 ];
 
 export default function HowItWorks() {
   return (
-    <section
-      id="how-it-works"
-      className="relative z-10 py-20 lg:py-32 border-t border-white/10"
-    >
-      <div className="container px-4">
-        <h2 className="text-3xl lg:text-5xl font-bold mb-16 text-center">
-          How It Works
+    <section id="how-it-works" className="scroll-mt-16 border-t border-border">
+      <div className="container py-24 lg:py-32">
+        <h2 className="max-w-[28rem] text-[32px] font-medium leading-[1.15] tracking-[-0.02em] lg:text-[40px]">
+          Three steps from upload to download
         </h2>
-        <div className="grid md:grid-cols-3 gap-10">
+        <ol className="mt-12 grid gap-px overflow-hidden rounded-[14px] bg-border md:grid-cols-3">
           {steps.map((step) => (
-            <div key={step.number} className="text-center md:text-left">
-              <div className="flex items-center gap-4 justify-center md:justify-start mb-4">
-                <div className="p-3 bg-orange-500/10 rounded-xl">
-                  {step.icon}
-                </div>
-                <span className="text-4xl font-bold text-white/10">
-                  {step.number}
-                </span>
-              </div>
-              <h3 className="font-semibold text-xl mb-2">{step.title}</h3>
-              <p className="text-gray-400">{step.description}</p>
-            </div>
+            <li key={step.number} className="bg-canvas p-6 lg:p-8">
+              <span className="font-mono text-2xs text-ember-strong">
+                {step.number}
+              </span>
+              <h3 className="mt-8 text-[18px] font-medium leading-[24px]">
+                {step.title}
+              </h3>
+              <p className="mt-2 text-sm text-fg-2">{step.description}</p>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   );

@@ -3,6 +3,7 @@
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { deleteImage } from "@/lib/actions/image.actions";
+import { Trash2 } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   AlertDialog,
@@ -36,31 +37,33 @@ export const DeleteConfirmation = ({ imageId }: { imageId: string }) => {
       <AlertDialogTrigger asChild>
         <Button
           type="button"
-          className="button h-[44px] w-full md:h-[54px]"
-          variant="destructive"
+          variant="outline"
+          className="text-destructive hover:bg-destructive/5 hover:text-destructive"
         >
-          Delete Image
+          <Trash2 strokeWidth={1.5} />
+          Delete
         </Button>
       </AlertDialogTrigger>
 
-      <AlertDialogContent className="flex flex-col gap-10">
+      <AlertDialogContent className="flex flex-col gap-6">
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Are you sure you want to delete this image?
+            Delete this image?
           </AlertDialogTitle>
-          <AlertDialogDescription className="p-16-regular">
-            This will permanently delete this image.
+          <AlertDialogDescription className="text-sm text-fg-2">
+            The image and its transformation are removed permanently. This
+            can&rsquo;t be undone.
           </AlertDialogDescription>
         </AlertDialogHeader>
 
         <AlertDialogFooter>
           <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
           <AlertDialogAction
-            className="border bg-red-500 text-white hover:bg-red-600"
+            className="bg-destructive text-white hover:bg-destructive/90"
             onClick={handleDelete}
             disabled={isPending}
           >
-            {isPending ? "Deleting..." : "Delete"}
+            {isPending ? "Deleting" : "Delete image"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

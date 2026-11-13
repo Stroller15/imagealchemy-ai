@@ -35,7 +35,7 @@ export const navLinks = [
       icon: "/assets/icons/profile.svg",
     },
     {
-      label: "Buy Credits",
+      label: "Buy credits",
       route: "/credits",
       icon: "/assets/icons/bag.svg",
     },
@@ -50,19 +50,19 @@ export const navLinks = [
       credits: 20,
       inclusions: [
         {
-          label: "20 Free Credits",
+          label: "20 free credits",
           isIncluded: true,
         },
         {
-          label: "Basic Access to Services",
+          label: "Basic access to every tool",
           isIncluded: true,
         },
         {
-          label: "Priority Customer Support",
+          label: "Priority support",
           isIncluded: false,
         },
         {
-          label: "Priority Updates",
+          label: "Early access to updates",
           isIncluded: false,
         },
       ],
@@ -75,19 +75,19 @@ export const navLinks = [
       credits: 120,
       inclusions: [
         {
-          label: "120 Credits",
+          label: "120 credits",
           isIncluded: true,
         },
         {
-          label: "Full Access to Services",
+          label: "Full access to every tool",
           isIncluded: true,
         },
         {
-          label: "Priority Customer Support",
+          label: "Priority support",
           isIncluded: true,
         },
         {
-          label: "Priority Updates",
+          label: "Early access to updates",
           isIncluded: false,
         },
       ],
@@ -100,19 +100,19 @@ export const navLinks = [
       credits: 2000,
       inclusions: [
         {
-          label: "2000 Credits",
+          label: "2,000 credits",
           isIncluded: true,
         },
         {
-          label: "Full Access to Services",
+          label: "Full access to every tool",
           isIncluded: true,
         },
         {
-          label: "Priority Customer Support",
+          label: "Priority support",
           isIncluded: true,
         },
         {
-          label: "Priority Updates",
+          label: "Early access to updates",
           isIncluded: true,
         },
       ],
@@ -122,29 +122,29 @@ export const navLinks = [
   export const transformationTypes = {
     restore: {
       type: "restore",
-      title: "Restore Image",
-      subTitle: "Refine images by removing noise and imperfections",
+      title: "Image Restore",
+      subTitle: "Remove noise, scratches and blur from old or damaged photos",
       config: { restore: true },
       icon: "image.svg",
     },
     removeBackground: {
       type: "removeBackground",
       title: "Background Remove",
-      subTitle: "Removes the background of the image using AI",
+      subTitle: "Cut the subject out and drop the background",
       config: { removeBackground: true },
       icon: "camera.svg",
     },
     fill: {
       type: "fill",
       title: "Generative Fill",
-      subTitle: "Enhance an image's dimensions using AI outpainting",
+      subTitle: "Extend a photo to a new aspect ratio with outpainting",
       config: { fillBackground: true },
       icon: "stars.svg",
     },
     remove: {
       type: "remove",
       title: "Object Remove",
-      subTitle: "Identify and eliminate objects from images",
+      subTitle: "Name an object and erase it from the photo",
       config: {
         remove: { prompt: "", removeShadow: true, multiple: true },
       },
@@ -153,7 +153,7 @@ export const navLinks = [
     recolor: {
       type: "recolor",
       title: "Object Recolor",
-      subTitle: "Identify and recolor objects from the image",
+      subTitle: "Name an object and give it a new color",
       config: {
         recolor: { prompt: "", to: "", multiple: true },
       },
@@ -170,13 +170,13 @@ export const navLinks = [
     },
     "3:4": {
       aspectRatio: "3:4",
-      label: "Standard Portrait (3:4)",
+      label: "Portrait (3:4)",
       width: 1000,
       height: 1334,
     },
     "9:16": {
       aspectRatio: "9:16",
-      label: "Phone Portrait (9:16)",
+      label: "Phone (9:16)",
       width: 1000,
       height: 1778,
     },

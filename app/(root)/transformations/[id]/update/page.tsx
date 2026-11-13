@@ -21,7 +21,7 @@ const Page = async ({ params: { id } }: SearchParamProps) => {
     <>
       <Header title={transformation.title} subtitle={transformation.subTitle} />
 
-      <section className="mt-10">
+      <section className="mt-8">
         <TransformationForm
           action="Update"
           userId={user._id}

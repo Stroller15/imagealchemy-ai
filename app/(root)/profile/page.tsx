@@ -1,6 +1,7 @@
+import Link from "next/link";
 import { auth } from "@clerk/nextjs";
-import Image from "next/image";
 import { redirect } from "next/navigation";
+import { ArrowRight } from "lucide-react";
 import { Collection } from "@/components/shared/Collection";
 import Header from "@/components/shared/Header";
 import { getUserImages } from "@/lib/actions/image.actions";
@@ -19,38 +20,33 @@ const Profile = async ({ searchParams }: SearchParamProps) => {
     <>
       <Header title="Profile" />
 
-      <section className="profile">
-        <div className="profile-balance">
-          <p className="p-14-medium md:p-16-medium">CREDITS AVAILABLE</p>
-          <div className="mt-4 flex items-center gap-4">
-            <Image
-              src="/assets/icons/coins.svg"
-              alt="coins"
-              width={50}
-              height={50}
-              className="size-9 md:size-12"
-            />
-            <h2 className="h2-bold text-dark-600">{user.creditBalance}</h2>
-          </div>
+      <section className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="rounded-[12px] bg-surface p-5 hairline">
+          <p className="text-xs text-fg-3">Credits available</p>
+          <p className="mt-3 text-[32px] font-medium leading-none tracking-[-0.02em] text-ember-strong tabular">
+            {user.creditBalance.toLocaleString("en-US")}
+          </p>
+          <Link
+            href="/credits"
+            className="mt-4 inline-flex items-center gap-1 text-xs text-fg-2 transition-colors duration-150 hover:text-fg"
+          >
+            Buy credits
+            <ArrowRight className="size-3.5" strokeWidth={1.5} />
+          </Link>
         </div>
 
-        <div className="profile-image-manipulation">
-          <p className="p-14-medium md:p-16-medium">IMAGE MANIPULATION DONE</p>
-          <div className="mt-4 flex items-center gap-4">
-            <Image
-              src="/assets/icons/photo.svg"
-              alt="coins"
-              width={50}
-              height={50}
-              className="size-9 md:size-12"
-            />
-            <h2 className="h2-bold text-dark-600">{images?.data.length}</h2>
-          </div>
+        <div className="rounded-[12px] bg-surface p-5 hairline">
+          <p className="text-xs text-fg-3">Edits saved</p>
+          <p className="mt-3 text-[32px] font-medium leading-none tracking-[-0.02em] tabular">
+            {(images?.totalImages ?? images?.data.length ?? 0).toLocaleString("en-US")}
+          </p>
+          <p className="mt-4 text-xs text-fg-3">Across all tools</p>
         </div>
       </section>
 
-      <section className="mt-8 md:mt-14">
+      <section className="mt-12">
         <Collection
+          title="Your edits"
           images={images?.data}
           totalPages={images?.totalPages}
           page={page}

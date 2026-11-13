@@ -1,30 +1,73 @@
-import { ArrowRight } from "lucide-react";
+import Image from "next/image";
+import { samples } from "./samples";
+
+const pairs = [
+  {
+    tool: "Object Recolor",
+    meta: "prompt: flowers · to: amber",
+    alt: "Dahlias in a garden",
+    ...samples.recolor,
+    transparent: false,
+  },
+  {
+    tool: "Background Remove",
+    meta: "subject: dog",
+    alt: "Beagle running with a ball",
+    ...samples.removeBackground,
+    transparent: true,
+  },
+];
 
 export default function DemoShowcase() {
   return (
-    <section className="relative z-10 py-20 lg:py-32 border-t border-white/10">
-      <div className="container px-4">
-        <h2 className="text-3xl lg:text-5xl font-bold mb-4 text-center">
-          See the Transformation
+    <section className="border-t border-border">
+      <div className="container py-24 lg:py-32">
+        <h2 className="max-w-[28rem] text-[32px] font-medium leading-[1.15] tracking-[-0.02em] lg:text-[40px]">
+          The same photo, before and after
         </h2>
-        <p className="text-gray-400 text-center max-w-xl mx-auto mb-16">
-          A preview of what Image Restore and Object Recolor can do to your
-          photos.
-        </p>
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-6 max-w-4xl mx-auto">
-          <div className="w-full lg:w-1/2">
-            <div className="relative aspect-square rounded-2xl border border-white/10 bg-gradient-to-br from-gray-600/40 to-gray-500/20 blur-[1px] grayscale-[60%] overflow-hidden">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.08),transparent_60%)]" />
-            </div>
-            <p className="text-center text-sm text-gray-500 mt-4">Before</p>
-          </div>
-          <ArrowRight className="h-8 w-8 text-orange-500 shrink-0 rotate-90 lg:rotate-0" />
-          <div className="w-full lg:w-1/2">
-            <div className="relative aspect-square rounded-2xl border border-orange-500/30 bg-gradient-to-br from-orange-500/30 to-purple-500/20 overflow-hidden">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.15),transparent_60%)]" />
-            </div>
-            <p className="text-center text-sm text-orange-500 mt-4">After</p>
-          </div>
+
+        <div className="mt-12 grid gap-12 lg:grid-cols-2 lg:gap-8">
+          {pairs.map((pair) => (
+            <figure key={pair.tool}>
+              <div className="grid grid-cols-2 gap-2 rounded-[14px] bg-surface p-2 hairline">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-[6px] bg-sunken">
+                  <Image
+                    src={pair.before}
+                    alt={`${pair.alt}, before`}
+                    fill
+                    sizes="(max-width: 1024px) 50vw, 300px"
+                    className="object-cover"
+                  />
+                </div>
+                <div
+                  className="relative aspect-[4/3] overflow-hidden rounded-[6px] bg-sunken"
+                  style={
+                    pair.transparent
+                      ? {
+                          backgroundImage:
+                            "conic-gradient(rgb(var(--raised)) 25%, rgb(var(--sunken)) 0 50%, rgb(var(--raised)) 0 75%, rgb(var(--sunken)) 0)",
+                          backgroundSize: "16px 16px",
+                        }
+                      : undefined
+                  }
+                >
+                  <Image
+                    src={pair.after}
+                    alt={`${pair.alt}, after`}
+                    fill
+                    sizes="(max-width: 1024px) 50vw, 300px"
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+              <figcaption className="mt-4 flex items-center justify-between gap-4 px-1">
+                <span className="text-sm font-medium">{pair.tool}</span>
+                <span className="truncate font-mono text-2xs text-fg-3">
+                  {pair.meta}
+                </span>
+              </figcaption>
+            </figure>
+          ))}
         </div>
       </div>
     </section>
