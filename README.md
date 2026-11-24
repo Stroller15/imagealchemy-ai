@@ -8,6 +8,13 @@ Restore, erase and extend your photos in the browser.
 
 [Live app](https://image-alchemy-sh.vercel.app/) · [How it works](#how-it-works) · [Run it locally](#run-it-locally)
 
+![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript&logoColor=white)
+![Cloudinary](https://img.shields.io/badge/Cloudinary-AI-3448c5?logo=cloudinary&logoColor=white)
+![Clerk](https://img.shields.io/badge/Auth-Clerk-6c47ff?logo=clerk&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose-47a248?logo=mongodb&logoColor=white)
+![Stripe](https://img.shields.io/badge/Stripe-test%20mode-635bff?logo=stripe&logoColor=white)
+
 </div>
 
 <picture>
